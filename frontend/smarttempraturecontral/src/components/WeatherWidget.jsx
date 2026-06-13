@@ -1,7 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchWeatherData } from '../services/weatherService';
-import WeatherAnimation from './WeatherAnimation';
 
 const WeatherWidget = ({ city = 'Kampala' }) => {
   const { data, isLoading, error } = useQuery({
@@ -13,6 +12,7 @@ const WeatherWidget = ({ city = 'Kampala' }) => {
 
   if (isLoading) return <div className="text-white text-sm p-6">Updating weather...</div>;
   if (error) return <div className="text-white text-sm p-6">Weather unavailable</div>;
+  if (!data || !data.weather) return null;
 
   return (
     <div className="text-white p-6">
@@ -23,7 +23,13 @@ const WeatherWidget = ({ city = 'Kampala' }) => {
           <p className="text-5xl font-light">{Math.round(data.main.temp)}°C</p>
           <p className="text-sm opacity-80 capitalize">{data.weather[0].description}</p>
         </div>
-        <WeatherAnimation iconCode={data.weather[0].icon} />
+        
+        {/* Official Weather Icon */}
+        <img 
+          src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} 
+          alt={data.weather[0].description} 
+          className="w-20 h-20"
+        />
       </div>
 
       {/* Details Grid */}
