@@ -1,7 +1,7 @@
 #include <WiFiNINA.h> // Or your specific WiFi library
 
-char ssid[] = "YOUR_SSID";
-char pass[] = "YOUR_PASSWORD";
+char ssid[] = "TheCrib";
+char pass[] = "theacrib.net";
 const char* serverName = "YOUR_DJANGO_SERVER_IP"; 
 
 WiFiClient client;

@@ -5,6 +5,12 @@ from django.db.models import Avg
 from django.db.models.functions import TruncDay
 from .models import TemperatureRecord, HumidityRecord
 from .serializers import TemperatureSerializer, HumiditySerializer
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from firebase_admin import db
+
+
 
 class BaseSensorView(generics.ListCreateAPIView):
     """Base class for sensor data to handle common logic."""
@@ -40,3 +46,20 @@ class HumidityTrendAPI(APIView):
             avg_value=Avg('humidity')
         ).order_by('date')
         return Response(data)
+    
+
+def get_sensor_data(request):
+    ref = db.reference('/')
+    data = ref.get()
+    
+    # If data is None (empty database), return a default structure
+    if data is None:
+        data = {'sensor': {'temperature': 0, 'humidity': 0}}
+    
+    # Safely get the 'sensor' node
+    sensor_data = data.get('sensor', {'temperature': 0, 'humidity': 0})
+    
+    return JsonResponse({
+        'status': 'success',
+        'data': sensor_data
+    })

@@ -5,10 +5,10 @@ const SensorGauge = ({ url, title, unit, maxVal, dataKey }) => {
   const { data, isLoading } = useQuery({
     queryKey: [url],
     queryFn: () => fetch(url).then(res => res.json()),
-    refetchInterval: 5000 
+    refetchInterval: 1000
   });
 
-  const value = data?.[0]?.[dataKey] || 0;
+  const value = data?.data?.[dataKey] || data?.[dataKey] || 0;
   const percentage = Math.min(Math.max((value / maxVal) * 100, 0), 100);
 
   // SVG circular progress logic

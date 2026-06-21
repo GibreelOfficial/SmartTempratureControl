@@ -48,9 +48,22 @@ const Dashboard = () => {
               <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200 flex items-center gap-2 transition-colors">
                 <Thermometer /> Indoor Monitoring (Arduino)
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <SensorGauge url="http://127.0.0.1:8000/api/temperature/" title="Indoor Temperature" unit="°C" maxVal={50} dataKey="temperature" />
-                <SensorGauge url="http://127.0.0.1:8000/api/humidity/" title="Indoor Humidity" unit="%" maxVal={100} dataKey="humidity" />
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Update the URL to point to your Django view */}
+                <SensorGauge 
+                  url="http://127.0.0.1:8000/api/sensor-data/" 
+                  title="Indoor Temperature" 
+                  unit="°C" 
+                  maxVal={50} 
+                  dataKey="temperature" 
+                />
+                <SensorGauge 
+                  url="http://127.0.0.1:8000/api/sensor-data/" 
+                  title="Indoor Humidity" 
+                  unit="%" 
+                  maxVal={100} 
+                  dataKey="humidity" 
+                />
               </div>
             </section>
           </main>
