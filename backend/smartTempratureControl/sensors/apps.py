@@ -1,17 +1,19 @@
-from django.apps import AppConfig
-import firebase_admin
-from firebase_admin import credentials
 import os
+import json
+import base64
+from django.apps import AppConfig
+from firebase_admin import credentials, initialize_app
 
 class SensorsConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
     name = 'sensors'
 
     def ready(self):
-        # Prevent multiple initializations
-        if not firebase_admin._apps:
-            cred_path = "/Volumes/Data Drive/CodeX/SmartTempratureControl/backend/smartTempratureControl/sensors/serviceAccountKey.json"
-            cred = credentials.Certificate(cred_path)
-            firebase_admin.initialize_app(cred, {
-                'databaseURL': 'https://smtp-49bf6-default-rtdb.europe-west1.firebasedatabase.app/'
-            })
+        # 1. Get the JSON content from an environment variable
+        firebase_json_base64 = os.environ.get('FIREBASE_SERVICE_ACCOUNT_BASE64')
+        
+        if firebase_json_base64:
+            # 2. Decode it
+            decoded_json = base64.b64decode(firebase_json_base64).decode('utf-8')
+            cred_dict = json.loads(decoded_json)
+            cred = credentials.Certificate(cred_dict)
+            initialize_app(cred)
