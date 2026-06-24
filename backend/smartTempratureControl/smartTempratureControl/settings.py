@@ -60,10 +60,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 ROOT_URLCONF = 'smartTempratureControl.urls'
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:3000", # Add your frontend's actual address
-]
 
 TEMPLATES = [
     {

@@ -51,14 +51,14 @@ const Dashboard = () => {
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Update the URL to point to your Django view */}
                 <SensorGauge 
-                  url="http://127.0.0.1:8000/api/sensor-data/" 
+                  url="http://127.0.0.1:8000/api/temperature/" 
                   title="Indoor Temperature" 
                   unit="°C" 
-                  maxVal={50} 
+                  maxVal={80} 
                   dataKey="temperature" 
                 />
                 <SensorGauge 
-                  url="http://127.0.0.1:8000/api/sensor-data/" 
+                  url="http://127.0.0.1:8000/api/humidity/" 
                   title="Indoor Humidity" 
                   unit="%" 
                   maxVal={100} 

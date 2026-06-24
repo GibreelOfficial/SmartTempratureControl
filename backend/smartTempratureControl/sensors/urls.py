@@ -1,10 +1,19 @@
 from django.urls import path
-from .views import TemperatureAPI, HumidityAPI,TemperatureTrendAPI,HumidityTrendAPI,get_sensor_data
+from .views import (
+    TemperatureAPI, 
+    HumidityAPI, 
+    SensorTrendAPI, 
+    FanControlAPI
+)
 
 urlpatterns = [
+    # Sensor Readings
     path('temperature/', TemperatureAPI.as_view(), name='temp-api'),
     path('humidity/', HumidityAPI.as_view(), name='humidity-api'),
-    path('temperature/trends/', TemperatureTrendAPI.as_view(), name='temp-trends'),
-    path('humidity/trends/', HumidityTrendAPI.as_view(), name='humidity-trends'),
-    path('sensor-data/', get_sensor_data, name='sensor-data'),
+    
+    # Trends (Using the consolidated dynamic view)
+    path('trends/<str:metric_type>/', SensorTrendAPI.as_view(), name='sensor-trends'),
+    
+    # Fan Control
+    path('fan-control/', FanControlAPI.as_view(), name='fan-control'),
 ]
