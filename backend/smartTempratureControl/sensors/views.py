@@ -17,11 +17,13 @@ class BaseSensorView(generics.ListCreateAPIView):
 
 # Control views
 class TemperatureAPI(BaseSensorView):
-    queryset = TemperatureRecord.objects.all().order_by('-timestamp')
+    # Retrieve only the last 3 records
+    queryset = TemperatureRecord.objects.all().order_by('-timestamp')[:3]
     serializer_class = TemperatureSerializer
 
 class HumidityAPI(BaseSensorView):
-    queryset = HumidityRecord.objects.all().order_by('-timestamp')
+    # Retrieve only the last 3 records
+    queryset = HumidityRecord.objects.all().order_by('-timestamp')[:3]
     serializer_class = HumiditySerializer
 
 class SensorTrendAPI(views.APIView):
