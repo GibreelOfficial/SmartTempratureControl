@@ -1,32 +1,33 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Shield, BarChart2, Thermometer, CloudSun } from 'lucide-react';
+import { Home, BarChart2, Thermometer, CloudSun } from 'lucide-react';
 import SensorGauge from '../components/Gauge';
 import WeatherWidget from '../components/WeatherWidget';
 import FanSwitch from '../components/FanSwitch';
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const Dashboard = () => {
-  // Theme is locked to light mode
   return (
-    <div className="min-h-screen bg-gray-200 p-6 transition-colors duration-300">
-      <div className="flex gap-6">
-        {/* Sidebar Navigation */}
-        <aside className="w-20 bg-white rounded-3xl p-6 flex flex-col items-center gap-8 text-blue-600 shadow-sm border border-gray-100">
-          <Link to="/" className="hover:text-blue-400 transition-colors"><Home size={28} /></Link>
-          {/*<Link to="/security" className="hover:text-blue-400 transition-colors"><Shield size={28} /></Link>*/}
-          <Link to="/statistics" className="hover:text-blue-400 transition-colors"><BarChart2 size={28} /></Link>
+    <div className="min-h-screen bg-gray-200 p-4 md:p-6 transition-colors duration-300 pb-24 md:pb-6">
+      <div className="flex flex-col md:flex-row gap-6 max-w-6xl mx-auto">
+        
+        {/* Sidebar Navigation: Bottom on mobile, Side on desktop */}
+        <aside className="fixed bottom-0 left-0 right-0 md:static md:w-20 bg-white/80 backdrop-blur-xl md:rounded-3xl p-4 md:p-6 flex md:flex-col justify-around md:justify-start items-center gap-4 md:gap-8 text-gray-100 shadow-xl md:shadow-blue-100/50 border-t md:border border-white z-50">
+          <Link to="/" className="p-3 rounded-2xl bg-blue-500 hover:bg-blue-50 transition-all"><Home size={24} /></Link>
+          {/*<Link to="/security" className="p-3 rounded-2xl hover:bg-blue-50 transition-all"><Shield size={24} /></Link>*/}
+          <Link to="/statistics" className="p-3 rounded-2xl bg-white text-blue-500 "><BarChart2 size={24} /></Link>
         </aside>
 
         {/* Main Content */}
         <main className="flex-1">
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-blue-600">
-              Smart Temparture Control Dashboard 
+          <header className="mb-6">
+            <h1 className="text-2xl md:text-3xl font-bold text-blue-600">
+              Smart Climate Dashboard 
             </h1>
           </header>
 
           <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+            <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
               <CloudSun /> Outdoor Environment
             </h2>
             <div className="bg-blue-600 rounded-3xl shadow-lg overflow-hidden text-white">
@@ -35,25 +36,25 @@ const Dashboard = () => {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
-              <Thermometer /> Indoor Monitoring (Arduino)
+            <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+              <Thermometer /> Indoor Monitoring
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               <SensorGauge 
-                url="http://127.0.0.1:8000/api/temperature/" 
-                title="Indoor Temperature" 
+                url={`${API_BASE}/api/temperature/`}
+                title="Temperature" 
                 unit="°C" 
                 maxVal={80} 
                 dataKey="temperature" 
               />
               <SensorGauge 
-                url="http://127.0.0.1:8000/api/humidity/" 
-                title="Indoor Humidity" 
+                url={`${API_BASE}/api/humidity/`} 
+                title="Humidity" 
                 unit="%" 
                 maxVal={100} 
                 dataKey="humidity" 
               />
-              <FanSwitch DatabaseUrl="http://127.0.0.1:8000/api" />
+              <FanSwitch />
             </div>
           </section>
         </main>

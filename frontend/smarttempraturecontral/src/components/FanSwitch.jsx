@@ -2,9 +2,11 @@ import React from 'react';
 import { Fan } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const FanSwitch = () => {
   const queryClient = useQueryClient();
-  const url = 'http://127.0.0.1:8000/api/fan-control/';
+  const url =`${API_BASE}/api/fan-control/`;
 
   // 1. Fetch the current state from the backend
   const { data } = useQuery({
