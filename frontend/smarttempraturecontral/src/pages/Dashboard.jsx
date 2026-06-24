@@ -22,7 +22,7 @@ const Dashboard = () => {
         <main className="flex-1">
           <header className="mb-6">
             <h1 className="text-2xl md:text-3xl font-bold text-blue-600">
-              Smart Climate Dashboard 
+              Smart Temprature Control Dashboard 
             </h1>
           </header>
 
